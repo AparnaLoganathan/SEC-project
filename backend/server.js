@@ -9,7 +9,7 @@ app.use(express.json());
 
 const DATA_FILE = path.join(__dirname, "tasks.json");
 
-// Read tasks
+
 function readTasks() {
   try {
     const data = fs.readFileSync(DATA_FILE, "utf8");
@@ -19,12 +19,12 @@ function readTasks() {
   }
 }
 
-// Write tasks
+
 function writeTasks(tasks) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(tasks, null, 2), "utf8");
 }
 
-// LOGIN — accept ANY email & password
+
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -35,12 +35,11 @@ app.post("/login", (req, res) => {
   return res.json({ success: true });
 });
 
-// GET TASKS
+
 app.get("/tasks", (req, res) => {
   res.json(readTasks());
 });
 
-// ADD TASK
 app.post("/tasks", (req, res) => {
   const { name, description, time } = req.body;
   const tasks = readTasks();
@@ -59,7 +58,7 @@ app.post("/tasks", (req, res) => {
   res.json({ success: true, task: newTask });
 });
 
-// EDIT / COMPLETE TASK
+
 app.put("/tasks/:id", (req, res) => {
   const id = req.params.id;
   const { name, description, time, completed } = req.body;
@@ -87,7 +86,7 @@ app.put("/tasks/:id", (req, res) => {
   res.json({ success: true });
 });
 
-// DELETE TASK
+
 app.delete("/tasks/:id", (req, res) => {
   const id = req.params.id;
   let tasks = readTasks();
